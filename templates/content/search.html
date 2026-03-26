@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Search" %} | {% trans "Sanjoor" %}{% endblock %}
+
+{% block content %}
+<h1 class="h4 mb-3">{% trans "Search" %}</h1>
+<form method="get" class="card sanjoor-card mb-3">
+    <div class="card-body d-flex gap-2">
+        <input type="text" class="form-control" name="q" value="{{ query }}" placeholder="{% trans 'Search in poems and verses' %}">
+        <button type="submit" class="btn btn-success">{% trans "Search" %}</button>
+    </div>
+</form>
+
+{% if query %}
+<div class="row g-3">
+    <div class="col-12 col-lg-6">
+        <div class="card sanjoor-card h-100">
+            <div class="card-body">
+                <h2 class="h6 mb-3">{% trans "Poem matches" %}</h2>
+                <ul class="mb-0">
+                    {% for poem in poems %}
+                    <li><a class="sanjoor-link" href="{% url 'content:poem-detail' poem.id %}">{{ poem.title|default:poem.id }}</a></li>
+                    {% empty %}
+                    <li class="muted-meta">{% trans "No poem matches." %}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="card sanjoor-card h-100">
+            <div class="card-body">
+                <h2 class="h6 mb-3">{% trans "Verse matches" %}</h2>
+                <ul class="mb-0">
+                    {% for verse in verses %}
+                    <li class="mb-2">
+                        <a class="sanjoor-link" href="{% url 'content:poem-detail' verse.poem_id %}">{{ verse.poem.title|default:verse.poem_id }}</a>
+                        <div class="small muted-meta">{{ verse.text|truncatechars:120 }}</div>
+                    </li>
+                    {% empty %}
+                    <li class="muted-meta">{% trans "No verse matches." %}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

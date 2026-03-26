@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ poem.title|default:poem.id }} | {% trans "Sanjoor" %}{% endblock %}
+
+{% block content %}
+<div class="card sanjoor-card mb-3">
+    <div class="card-body">
+        <h1 class="h4 mb-1">{{ poem.title|default:poem.id }}</h1>
+        <p class="mb-0 muted-meta">{{ poem.url }}</p>
+    </div>
+</div>
+
+<div class="card sanjoor-card mb-3">
+    <div class="card-body">
+        <h2 class="h6 mb-3">{% trans "Text" %}</h2>
+        <div class="poem-board">
+        {% for right_half, left_half in verse_rows %}
+        <div class="poem-row">
+            <div class="poem-row-order" aria-hidden="true">{{ right_half.order }}</div>
+            <div class="poem-row-verses">
+                <div class="poem-half poem-half-right">
+                    {{ right_half.text }}
+                </div>
+                <div class="poem-half poem-half-left">
+                    {{ left_half.text }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% for verse in single_verses %}
+        <div class="poem-single text-center">
+            <span class="poem-row-order" aria-hidden="true">{{ verse.order }}</span>
+            {{ verse.text }}
+        </div>
+        {% empty %}
+        {% if not verse_rows %}
+        <p class="muted-meta mb-0">{% trans "No verses available." %}</p>
+        {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% if sounds %}
+<div class="card sanjoor-card">
+    <div class="card-body">
+        <h2 class="h6 mb-3">{% trans "Audio files" %}</h2>
+        <ul class="mb-0">
+            {% for sound in sounds %}
+            <li class="mb-2">
+                <span>{{ sound.description|default:_("Audio file") }}</span>
+                {% if sound.download_url %}
+                <a class="sanjoor-link ms-2" href="{{ sound.download_url }}" target="_blank" rel="noopener">{% trans "Download" %}</a>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const poemBoard = document.querySelector('.poem-board');
+    if (!poemBoard) return;
+
+    poemBoard.addEventListener('copy', function (event) {
+        const lines = [];
+
+        poemBoard.querySelectorAll('.poem-row').forEach(function (row) {
+            const right = row.querySelector('.poem-half-right');
+            const left = row.querySelector('.poem-half-left');
+            if (right && right.textContent.trim()) lines.push(right.textContent.trim());
+            if (left && left.textContent.trim()) lines.push(left.textContent.trim());
+        });
+
+        poemBoard.querySelectorAll('.poem-single').forEach(function (single) {
+            const copyNode = single.cloneNode(true);
+            copyNode.querySelectorAll('.poem-row-order').forEach(function (num) { num.remove(); });
+            const text = copyNode.textContent.trim();
+            if (text) lines.push(text);
+        });
+
+        if (lines.length) {
+            event.preventDefault();
+            event.clipboardData.setData('text/plain', lines.join('\n \n'));
+        }
+    });
+});
+</script>
+{% endblock %}

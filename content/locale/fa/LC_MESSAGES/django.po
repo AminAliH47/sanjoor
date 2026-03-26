@@ -18,10 +18,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: .\config\settings.py:162
-msgid "Persian"
-msgstr "فارسی"
+#: .\content\models\poetry.py:17
+msgid "category"
+msgstr "دسته بندی"
 
-#: .\config\settings.py:163
-msgid "English"
-msgstr "English"
+#: .\content\models\poetry.py:18
+msgid "categories"
+msgstr "دسته بندی‌ها"
+
+#: .\content\models\poetry.py:35
+msgid "poet"
+msgstr "شاعر"
+
+#: .\content\models\poetry.py:36
+msgid "poets"
+msgstr "شاعران"
+
+#: .\content\models\poetry.py:54
+msgid "poem"
+msgstr "شعر"
+
+#: .\content\models\poetry.py:55
+msgid "poems"
+msgstr "اشعار"
+
+#: .\content\models\poetry.py:74
+msgid "verse"
+msgstr "مصرع"
+
+#: .\content\models\poetry.py:75
+msgid "verses"
+msgstr "مصرع‌ها"

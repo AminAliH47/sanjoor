@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-26 18:12+0330\n"
+"POT-Creation-Date: 2026-03-26 17:50+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+#: .\common\exceptions.py:12
+msgid "Services not available"
+msgstr ""
 
-#: .\config\settings.py:162
-msgid "Persian"
-msgstr "فارسی"
+#: .\common\serializers.py:64
+msgid "Limit the number of items to return."
+msgstr ""
 
-#: .\config\settings.py:163
-msgid "English"
-msgstr "English"
+#: .\common\serializers.py:69
+msgid "Offset the number of items to return."
+msgstr ""

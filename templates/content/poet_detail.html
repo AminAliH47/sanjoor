@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ poet.name }} | {% trans "Sanjoor" %}{% endblock %}
+
+{% block content %}
+<div class="card sanjoor-card mb-3">
+    <div class="card-body">
+        <h1 class="h4">{{ poet.name }}</h1>
+        <p class="mb-0 muted-meta">{{ poet.description|default:_("No description available.") }}</p>
+    </div>
+</div>
+
+<h2 class="h5 mb-3">{% trans "Collections and categories" %}</h2>
+<div class="list-group">
+    {% for category in categories %}
+    <a class="list-group-item list-group-item-action bg-transparent text-light border-success-subtle" href="{% url 'content:category-detail' category.id %}">
+        {{ category.text|default:category.id }}
+    </a>
+    {% empty %}
+    <p class="muted-meta">{% trans "No categories found for this poet." %}</p>
+    {% endfor %}
+</div>
+{% endblock %}

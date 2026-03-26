@@ -1,0 +1,203 @@
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('/static/fonts/vazirmatn/Vazirmatn-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('/static/fonts/vazirmatn/Vazirmatn-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    background-color: #161922;
+    color: #ffffff;
+}
+
+.sanjoor-navbar {
+    background-color: #161922;
+    border-bottom: 1px solid #70AA1F;
+}
+
+.sanjoor-card {
+    background-color: #161922;
+    border: 1px solid #70AA1F;
+    color: #ffffff;
+}
+
+.sanjoor-link {
+    color: #70AA1F;
+    text-decoration: none;
+}
+
+.sanjoor-link:hover {
+    color: #70AA1F;
+    opacity: 0.9;
+}
+
+.poem-line {
+    border-bottom: 1px dashed #70AA1F;
+    padding: 0.5rem 0;
+}
+
+.muted-meta {
+    color: #ffffff;
+    opacity: 0.85;
+}
+
+.btn-success {
+    background-color: #70AA1F;
+    border-color: #70AA1F;
+    color: #000000;
+}
+
+.btn-success:hover,
+.btn-success:focus {
+    background-color: #70AA1F;
+    border-color: #70AA1F;
+    color: #000000;
+    opacity: 0.9;
+}
+
+.sanjoor-navbar .nav-link,
+.sanjoor-navbar .navbar-brand {
+    color: #ffffff !important;
+}
+
+.form-control {
+    background-color: #161922;
+    color: #ffffff;
+    border-color: #70AA1F;
+}
+
+.form-control::placeholder {
+    color: #ffffff;
+    opacity: 0.7;
+}
+
+.form-control:focus {
+    background-color: #161922;
+    color: #ffffff;
+    border-color: #70AA1F;
+    box-shadow: none;
+}
+
+.poet-photo {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid #70AA1F;
+    object-fit: cover;
+}
+
+.poem-board {
+    border: 1px solid #70AA1F;
+    border-radius: 0.5rem;
+    background-color: #161922;
+    padding: 1rem;
+}
+
+.poem-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.55rem;
+    padding: 0.35rem 0;
+    border-bottom: 1px dashed #70AA1F;
+    align-items: start;
+}
+
+.poem-row:last-child {
+    border-bottom: none;
+}
+
+.poem-row-order {
+    color: #70AA1F;
+    font-weight: 700;
+    min-width: 1.2rem;
+    text-align: center;
+    line-height: 1.5;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    pointer-events: none;
+}
+
+.poem-row-verses {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+}
+
+.poem-half {
+    color: #ffffff;
+    line-height: 1.55;
+}
+
+.poem-half-right {
+    text-align: end;
+}
+
+.poem-half-left {
+    text-align: start;
+}
+
+.poem-single {
+    color: #ffffff;
+    line-height: 1.55;
+    border-bottom: 1px dashed #70AA1F;
+    padding: 0.35rem 0;
+}
+
+.poem-single:last-child {
+    border-bottom: none;
+}
+
+.list-group-item {
+    color: #ffffff !important;
+    border-color: #70AA1F !important;
+}
+
+.pagination .page-link {
+    background-color: #161922;
+    border-color: #70AA1F;
+    color: #ffffff;
+}
+
+@media (max-width: 767px) {
+    .poem-row {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
+        padding: 0.4rem 0;
+    }
+
+    .poem-row-order {
+        min-width: 0;
+        width: 100%;
+        text-align: center;
+        line-height: 1.2;
+        margin-bottom: 0.15rem;
+    }
+
+    .poem-row-verses {
+        grid-template-columns: 1fr;
+        gap: 0.15rem;
+    }
+
+    .poem-half-right,
+    .poem-half-left {
+        text-align: center;
+        line-height: 1.6;
+    }
+
+    .poem-single {
+        line-height: 1.6;
+        padding: 0.4rem 0;
+    }
+}

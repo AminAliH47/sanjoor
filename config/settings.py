@@ -58,6 +58,9 @@ INSTALLED_APPS = [
     # Django Apps
     'common.apps.CommonConfig',
     'account.apps.AccountConfig',
+    'content.apps.ContentConfig',
+    'audio.apps.AudioConfig',
+    'meta.apps.MetaConfig',
 
     'django_cleanup.apps.CleanupConfig',
 ]
@@ -79,7 +82,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -147,7 +150,7 @@ AUTH_USER_MODEL = 'account.User'
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fa'
 
 TIME_ZONE = 'UTC'
 
@@ -156,8 +159,12 @@ USE_I18N = True
 USE_TZ = True
 
 LANGUAGES = (
-    ('en-us', _('English')),
     ('fa', _('Persian')),
+    ('en-us', _('English')),
+)
+
+LOCALE_PATHS = (
+    BASE_DIR / 'templates' / 'locale',
 )
 
 # Static files (CSS, JavaScript, Images)

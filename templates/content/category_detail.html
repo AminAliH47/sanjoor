@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ category.text|default:category.id }} | {% trans "Sanjoor" %}{% endblock %}
+
+{% block content %}
+<h1 class="h4 mb-3">{{ category.text|default:category.id }}</h1>
+
+<div class="row g-3">
+    <div class="col-12 col-lg-6">
+        <div class="card sanjoor-card h-100">
+            <div class="card-body">
+                <h2 class="h6">{% trans "Subcategories" %}</h2>
+                <div class="list-group list-group-flush">
+                    {% for child in children %}
+                    <a class="list-group-item list-group-item-action bg-transparent text-light border-success-subtle" href="{% url 'content:category-detail' child.id %}">
+                        {{ child.text|default:child.id }}
+                    </a>
+                    {% empty %}
+                    <p class="muted-meta mb-0">{% trans "No subcategories." %}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="card sanjoor-card h-100">
+            <div class="card-body">
+                <h2 class="h6">{% trans "Poems" %}</h2>
+                <div class="list-group list-group-flush">
+                    {% for poem in poems %}
+                    <a class="list-group-item list-group-item-action bg-transparent text-light border-success-subtle" href="{% url 'content:poem-detail' poem.id %}">
+                        {{ poem.title|default:poem.id }}
+                    </a>
+                    {% empty %}
+                    <p class="muted-meta mb-0">{% trans "No poems in this category." %}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

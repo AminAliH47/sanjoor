@@ -1,0 +1,137 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-26 18:12+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\templates\base.html:8 .\templates\components\navbar.html:4
+#: .\templates\content\category_detail.html:4 .\templates\content\home.html:4
+#: .\templates\content\poem_detail.html:4
+#: .\templates\content\poet_detail.html:4 .\templates\content\search.html:4
+msgid "Sanjoor"
+msgstr "سنجور"
+
+#: .\templates\components\navbar.html:5
+msgid "Toggle navigation"
+msgstr ""
+
+#: .\templates\components\navbar.html:10 .\templates\content\home.html:4
+#: .\templates\content\home.html:8
+msgid "Poets"
+msgstr "شعرا"
+
+#: .\templates\components\navbar.html:11 .\templates\components\navbar.html:15
+#: .\templates\content\search.html:4 .\templates\content\search.html:7
+#: .\templates\content\search.html:11
+msgid "Search"
+msgstr "جستجو"
+
+#: .\templates\components\navbar.html:14
+msgid "Search verses or poems"
+msgstr "جستجو مصرع‌ها یا شعر‌ها"
+
+#: .\templates\content\category_detail.html:13
+msgid "Subcategories"
+msgstr "زیردسته‌بندی‌ها"
+
+#: .\templates\content\category_detail.html:20
+msgid "No subcategories."
+msgstr "زیردسته‌بندی‌هایی یافت نشد."
+
+#: .\templates\content\category_detail.html:29
+msgid "Poems"
+msgstr "شعر‌ها"
+
+#: .\templates\content\category_detail.html:36
+msgid "No poems in this category."
+msgstr "شعری در این دسته بندی یافت نشد."
+
+#: .\templates\content\home.html:9
+msgid "Browse by poet"
+msgstr "مشاهده بر اساس شاعر"
+
+#: .\templates\content\home.html:17
+msgid "Poet image"
+msgstr "تصویر شاعر"
+
+#: .\templates\content\home.html:23
+msgid "View poet page"
+msgstr "مشاهده صفحه شاعر"
+
+#: .\templates\content\home.html:30
+msgid "No poets found."
+msgstr "شاعری یافت نشد."
+
+#: .\templates\content\home.html:37
+msgid "Previous"
+msgstr "قبلی"
+
+#: .\templates\content\home.html:41
+msgid "Next"
+msgstr "بعدی"
+
+#: .\templates\content\poem_detail.html:16
+msgid "Text"
+msgstr "متن"
+
+#: .\templates\content\poem_detail.html:37
+msgid "No verses available."
+msgstr "مصرعی یافت نشد."
+
+#: .\templates\content\poem_detail.html:47
+msgid "Audio files"
+msgstr "فایل‌های صوتی"
+
+#: .\templates\content\poem_detail.html:51
+msgid "Audio file"
+msgstr "فایل صوتی"
+
+#: .\templates\content\poem_detail.html:53
+msgid "Download"
+msgstr "دانلود"
+
+#: .\templates\content\poet_detail.html:10
+msgid "No description available."
+msgstr "توضیحی یافت نشد."
+
+#: .\templates\content\poet_detail.html:14
+msgid "Collections and categories"
+msgstr "دسته‌بندی‌ها و مجموعه‌ها"
+
+#: .\templates\content\poet_detail.html:21
+msgid "No categories found for this poet."
+msgstr "دسته‌بندی‌ای برای این شاعر یافت نشد."
+
+#: .\templates\content\search.html:10
+msgid "Search in poems and verses"
+msgstr "جستجو در شعرها و مصرع‌ها"
+
+#: .\templates\content\search.html:20
+msgid "Poem matches"
+msgstr "مطابقت شعرها"
+
+#: .\templates\content\search.html:25
+msgid "No poem matches."
+msgstr "مطابقتی برای شعر یافت نشد."
+
+#: .\templates\content\search.html:34
+msgid "Verse matches"
+msgstr "مطابقت مصرع‌ها"
+
+#: .\templates\content\search.html:42
+msgid "No verse matches."
+msgstr "مطابقتی برای مصرع یافت نشد."
