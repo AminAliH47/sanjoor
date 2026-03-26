@@ -107,8 +107,8 @@ body {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 0.55rem;
-    padding: 0.35rem 0;
-    border-bottom: 1px dashed #70AA1F;
+    padding: 0.45rem 0;
+    border-bottom: none;
     align-items: start;
 }
 
