@@ -24,7 +24,7 @@ class EnvsConfig(BaseSettings):
     REDIS_HOST: str
     REDIS_PORT: str = '6379'
     REDIS_DB: int = 0
-    REDIS_PASSWORD: str = None
+    REDIS_PASSWORD: str | None = None
 
     CACHE_TIMEOUT_HOURS: int | None = None
 
