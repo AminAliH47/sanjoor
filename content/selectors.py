@@ -1,4 +1,4 @@
-from django.db.models import Q, QuerySet
+from django.db.models import OuterRef, Q, QuerySet, Subquery
 
 from audio.models import PoemSound
 from content.models import Category, Poem, Poet, Verse
@@ -32,13 +32,16 @@ def get_category_children(category: Category) -> QuerySet[Category]:
     return Category.objects.filter(parent_id=category.id).order_by('id')
 
 
-def get_category_poems(category: Category) -> QuerySet[Poem]:
+def get_category_poems_queryset(category: Category) -> QuerySet[Poem]:
+    """Poems in a category with first verse text in one query (no per-poem verse queries).
+
+    """
+    first_verse_text = Subquery(
+        Verse.objects.filter(poem_id=OuterRef('pk')).order_by('order').values('text')[:1]
+    )
     return (
-        Poem
-        .objects
-        .filter(category_id=category.id)
-        .select_related('category')
-        .prefetch_related('verses')
+        Poem.objects.filter(category_id=category.id)
+        .annotate(first_verse_text=first_verse_text)
         .order_by('id')
     )
 

@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.views.generic import DetailView, ListView, TemplateView
 
 from content import selectors
@@ -34,14 +35,20 @@ class CategoryDetailView(DetailView):
     template_name = 'content/category_detail.html'
     context_object_name = 'category'
     pk_url_kwarg = 'category_id'
+    poems_per_page = 50
 
     def get_object(self, queryset=None):
         return selectors.get_category_by_id(self.kwargs['category_id'])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         context['children'] = selectors.get_category_children(self.object)
-        context['poems'] = selectors.get_category_poems(self.object)
+
+        poems_qs = selectors.get_category_poems_queryset(self.object)
+        paginator = Paginator(poems_qs, self.poems_per_page)
+        context['poems_page'] = paginator.get_page(self.request.GET.get('page'))
+
         return context
 
 

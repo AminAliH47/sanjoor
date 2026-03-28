@@ -64,9 +64,6 @@ class Poem(models.Model):
     def __str__(self) -> str:
         return self.title or str(self.id)
 
-    def get_first_verse(self) -> 'Verse':
-        return self.verses.order_by('order').first()
-
 
 class Verse(models.Model):
     """Ordered verse or prose line linked to a poem."""
