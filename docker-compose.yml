@@ -1,0 +1,77 @@
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: postgres
+    hostname: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      sanjoor_network:
+        aliases:
+          - postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  redis:
+    image: redis:8-alpine
+    container_name: redis
+    hostname: redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    networks:
+      sanjoor_network:
+        aliases:
+          - redis
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: app:latest
+    container_name: app
+    hostname: app
+    ports:
+      - 127.0.0.1:${PORT:-2000}:${PORT:-2000}
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - CONTAINER_ROLE=app
+    volumes:
+      - ./static:/app/static
+      - ./media:/app/media
+    networks:
+      sanjoor_network:
+        aliases:
+          - app
+    depends_on:
+      - postgres:
+        condition: service_healthy
+      - redis:
+        condition: service_healthy
+
+networks:
+  sanjoor_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
