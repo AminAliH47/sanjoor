@@ -29,8 +29,15 @@ class Poet(models.Model):
     category = models.ForeignKey(Category, models.DO_NOTHING, db_column='cat_id', related_name='poets')
     description = models.TextField(blank=True, null=True)
 
+    # Custom fields
+    photo = models.ImageField(
+        null=True,
+        blank=True,
+        help_text=_('Portrait of the poet')
+    )
+
     class Meta:
-        managed = False
+        managed = True
         db_table = 'poet'
         verbose_name = _('poet')
         verbose_name_plural = _('poets')
@@ -56,6 +63,9 @@ class Poem(models.Model):
 
     def __str__(self) -> str:
         return self.title or str(self.id)
+
+    def get_first_verse(self) -> 'Verse':
+        return self.verses.order_by('order').first()
 
 
 class Verse(models.Model):
