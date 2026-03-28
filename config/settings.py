@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'drf_spectacular',
     'cacheops',
+    'pwa',
 
     # Django Apps
     'common.apps.CommonConfig',
@@ -261,3 +262,34 @@ CELERY_TASK_ACKS_LATE = True  # Only acknowledge tasks after they are completed
 
 # Storage
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024  # 5 Mb limit
+
+# PWA
+PWA_APP_NAME = envs.PROJECT_TITLE
+PWA_APP_DESCRIPTION = _('Sanjoor is a website that allows you to search for poems and poets.')
+PWA_APP_THEME_COLOR = '#679C1F'
+PWA_APP_BACKGROUND_COLOR = '#161922'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'any'
+PWA_APP_START_URL = '/'
+PWA_APP_STATUS_BAR_COLOR = 'default'
+PWA_APP_ICONS = [
+    {
+        'src': '/static/pwa/icon-160x160.png',
+        'sizes': '160x160'
+    }
+]
+PWA_APP_ICONS_APPLE = [
+    {
+        'src': '/static/pwa/icon-160x160.png',
+        'sizes': '160x160'
+    }
+]
+PWA_APP_SPLASH_SCREEN = [
+    {
+        'src': '/static/pwa/splash-640x1136.png',
+        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+    }
+]
+PWA_APP_DIR = 'rtl' if LANGUAGE_CODE == 'fa' else 'ltr'
+PWA_APP_LANG = LANGUAGE_CODE

@@ -1,11 +1,14 @@
 {% load i18n static %}
 {% get_current_language as CURRENT_LANGUAGE %}
+{% load pwa %}
 <!doctype html>
 <html lang="{{ CURRENT_LANGUAGE }}" dir="{% if CURRENT_LANGUAGE == 'fa' %}rtl{% else %}ltr{% endif %}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{% trans 'Sanjoor is a website that allows you to search for poems and poets.' %}">
+    {% progressive_web_app_meta %}
+
     <link rel="icon" href="{% static 'images/favicon.png' %}">
     <title>{% block title %}{{ PROJECT_TITLE|default:_("Sanjoor") }}{% endblock %}</title>
     {% if CURRENT_LANGUAGE == 'fa' %}

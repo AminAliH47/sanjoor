@@ -22,6 +22,7 @@ from debug_toolbar.toolbar import debug_toolbar_urls
 
 urlpatterns = [
     path('', include('content.urls')),
+    path('', include('pwa.urls')),
     path('modir/', admin.site.urls),
 ]
 
