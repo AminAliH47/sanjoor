@@ -7,7 +7,7 @@
 <div class="card sanjoor-card mb-3">
     <div class="card-body">
         <h1 class="h4 mb-1">{{ poem.title|default:poem.id }}</h1>
-        <p class="mb-0 muted-meta">{{ poem.url }}</p>
+        <a href="{{ poem.url }}" class="mb-0 muted-meta" target="_blank" rel="noopener">{{ poem.url }}</a>
     </div>
 </div>
 

@@ -33,7 +33,14 @@ def get_category_children(category: Category) -> QuerySet[Category]:
 
 
 def get_category_poems(category: Category) -> QuerySet[Poem]:
-    return Poem.objects.filter(category_id=category.id).order_by('id')
+    return (
+        Poem
+        .objects
+        .filter(category_id=category.id)
+        .select_related('category')
+        .prefetch_related('verses')
+        .order_by('id')
+    )
 
 
 def get_poem_by_id(poem_id: int) -> Poem:

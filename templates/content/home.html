@@ -14,14 +14,18 @@
         <div class="card sanjoor-card h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center gap-3 mb-3">
-                    <img class="poet-photo" src="{% static 'images/poets_default.png' %}" alt="{% trans 'Poet image' %}">
+                    <a class="sanjoor-link" href="{% url 'content:poet-detail' poet.id %}">
+                        {% if poet.photo %}
+                        <img class="poet-photo" src="{{ poet.photo.url }}" alt="{% trans 'Poet image' %}">
+                        {% else %}
+                        <img class="poet-photo" src="{% static 'images/poets_default.png' %}" alt="{% trans 'Poet image' %}">
+                        {% endif %}
+                    </a>
+
                     <h2 class="h6 mb-0">
                         <a class="sanjoor-link" href="{% url 'content:poet-detail' poet.id %}">{{ poet.name|default:poet.id }}</a>
                     </h2>
                 </div>
-                <h2 class="h6 mb-2">
-                    <a class="sanjoor-link" href="{% url 'content:poet-detail' poet.id %}">{% trans "View poet page" %}</a>
-                </h2>
                 <p class="small muted-meta mb-0">{{ poet.description|truncatechars:140 }}</p>
             </div>
         </div>
