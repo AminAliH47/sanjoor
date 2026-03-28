@@ -5,6 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% trans 'Sanjoor is a website that allows you to search for poems and poets.' %}">
+    <link rel="icon" href="{% static 'images/favicon.png' %}">
     <title>{% block title %}{{ PROJECT_TITLE|default:_("Sanjoor") }}{% endblock %}</title>
     {% if CURRENT_LANGUAGE == 'fa' %}
     <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.rtl.min.css' %}">

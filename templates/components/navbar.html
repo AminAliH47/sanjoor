@@ -1,7 +1,22 @@
-{% load i18n %}
+{% load i18n static %}
+{% get_current_language as CURRENT_LANGUAGE %}
 <nav class="navbar navbar-expand-lg sanjoor-navbar mb-4">
     <div class="container">
-        <a class="navbar-brand text-light" href="{% url 'content:home' %}">{% trans "Sanjoor" %}</a>
+        <a class="navbar-brand text-light" href="{% url 'content:home' %}">
+            {% if CURRENT_LANGUAGE == 'fa' %}
+            <img src="{% static 'images/logo.png' %}" 
+                alt="{% trans 'Sanjoor' %}" 
+                class="img-fluid" 
+                style="width: 50px;"
+                loading="lazy">
+            {% else %}
+            <img src="{% static 'images/logo_en.png' %}" 
+                alt="{% trans 'Sanjoor' %}" 
+                class="img-fluid" 
+                style="width: 50px;"
+                loading="lazy">
+            {% endif %}
+        </a>
         <button class="navbar-toggler btn btn-sm btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="{% trans 'Toggle navigation' %}">
             <span class="text-light">☰</span>
         </button>
