@@ -68,6 +68,21 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!poemBoard) return;
 
     poemBoard.addEventListener('copy', function (event) {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+            const selectedText = sel.toString();
+            if (selectedText.trim()) {
+                const range = sel.getRangeAt(0);
+                let node = range.commonAncestorContainer;
+                if (node.nodeType !== Node.ELEMENT_NODE) {
+                    node = node.parentElement;
+                }
+                if (node && poemBoard.contains(node)) {
+                    return;
+                }
+            }
+        }
+
         const lines = [];
 
         poemBoard.querySelectorAll('.poem-row').forEach(function (row) {
@@ -86,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (lines.length) {
             event.preventDefault();
-            event.clipboardData.setData('text/plain', lines.join('\n \n'));
+            event.clipboardData.setData('text/plain', lines.join('\n'));
         }
     });
 });
