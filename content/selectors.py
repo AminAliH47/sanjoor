@@ -13,7 +13,23 @@ def get_empty_verse_queryset() -> QuerySet[Verse]:
 
 
 def get_poets() -> QuerySet[Poet]:
-    return Poet.objects.order_by('name')
+    return Poet.objects.filter(is_selected=False).order_by('name')
+
+
+def get_selected_poets() -> QuerySet[Poet]:
+    return Poet.objects.filter(is_selected=True).order_by('name')
+
+
+def search_poets_by_name_or_description(query: str, limit: int = 200) -> QuerySet[Poet]:
+    """Non-featured poets matching name or description (same pool as the home list)."""
+    stripped = query.strip()
+    if not stripped:
+        return Poet.objects.none()
+    return (
+        Poet.objects.filter(is_selected=False)
+        .filter(Q(name__icontains=stripped) | Q(description__icontains=stripped))
+        .order_by('name')[:limit]
+    )
 
 
 def get_poet_by_id(poet_id: int) -> Poet:

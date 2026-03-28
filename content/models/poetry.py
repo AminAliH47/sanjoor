@@ -35,6 +35,12 @@ class Poet(models.Model):
         blank=True,
         help_text=_('Portrait of the poet')
     )
+    is_selected = models.BooleanField(
+        default=False,
+        db_index=True,
+        help_text=_('Show in the featured list on the home page for quick access.'),
+        verbose_name=_('selected for home'),
+    )
 
     class Meta:
         managed = True

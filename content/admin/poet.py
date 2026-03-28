@@ -14,6 +14,16 @@ class PoetAdmin(admin.ModelAdmin):
     ordering = ('name',)
     list_display = (
         'name',
+        'is_selected',
+    )
+    list_display_links = (
+        'name',
+    )
+    list_editable = (
+        'is_selected',
+    )
+    list_filter = (
+        'is_selected',
     )
     search_fields = (
         'name',

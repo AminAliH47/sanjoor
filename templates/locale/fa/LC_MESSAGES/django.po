@@ -135,3 +135,15 @@ msgstr "مطابقت مصرع‌ها"
 #: .\templates\content\search.html:42
 msgid "No verse matches."
 msgstr "مطابقتی برای مصرع یافت نشد."
+
+#: .\templates\content\home.html
+msgid "Most visited poets"
+msgstr "پربازدیدترین سخنوران"
+
+#: .\templates\content\home.html
+msgid "Search poets"
+msgstr "جستجوی سخنوران"
+
+#: .\templates\content\home.html
+msgid "Search by name or description…"
+msgstr "جستجو بر اساس نام یا توضیحات…"

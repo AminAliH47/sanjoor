@@ -4,11 +4,48 @@
 {% block title %}{% trans "Poets" %} | {% trans "Sanjoor" %}{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="h4 mb-0">{% trans "Poets" %}</h1>
-    <span class="muted-meta">{% trans "Browse by poet" %}</span>
+{% if selected_poets %}
+<section class="mb-4" aria-label="{% trans 'Most visited poets' %}">
+    <h2 class="h5 mb-3">{% trans "Most visited poets" %}</h2>
+    <div class="d-flex flex-nowrap gap-2 overflow-auto pb-2">
+        {% for poet in selected_poets %}
+        <div class="flex-shrink-0" style="width: 11rem;">
+            <div class="card sanjoor-card h-100">
+                <div class="card-body text-center py-3">
+                    <a class="sanjoor-link d-inline-block mb-2" href="{% url 'content:poet-detail' poet.id %}">
+                        {% if poet.photo %}
+                        <img class="poet-photo mx-auto d-block" src="{{ poet.photo.url }}" alt="{% trans 'Poet image' %}">
+                        {% else %}
+                        <img class="poet-photo mx-auto d-block" src="{% static 'images/poets_default.png' %}" alt="{% trans 'Poet image' %}">
+                        {% endif %}
+                    </a>
+                    <a class="sanjoor-link fw-bold small d-block text-truncate" href="{% url 'content:poet-detail' poet.id %}" title="{{ poet.name|default:poet.id }}">{{ poet.name|default:poet.id }}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-stretch align-items-md-center gap-3 mb-3">
+    <div>
+        <h1 class="h4 mb-0">{% trans "Poets" %}</h1>
+        <span class="muted-meta d-none d-md-inline">{% trans "Browse by poet" %}</span>
+    </div>
+    <div class="flex-grow-1" style="max-width: 28rem;">
+        <label class="visually-hidden" for="poets-live-search">{% trans "Search poets" %}</label>
+        <input type="search" id="poets-live-search" class="form-control form-control-sm" autocomplete="off"
+               placeholder="{% trans 'Search by name or description…' %}"
+               data-search-url="{% url 'content:poet-search-ajax' %}"
+               data-default-photo="{% static 'images/poets_default.png' %}"
+               data-msg-empty="{% trans 'No poets found.' %}"
+               data-msg-poet-image="{% trans 'Poet image' %}">
+    </div>
 </div>
-<div class="row g-3">
+
+<div id="poets-list-mount">
+<div class="row g-3" id="poets-grid">
     {% for poet in poets %}
     <div class="col-12 col-sm-6 col-lg-4">
         <div class="card sanjoor-card h-100">
@@ -35,7 +72,7 @@
     {% endfor %}
 </div>
 {% if is_paginated %}
-<nav class="mt-4">
+<nav class="mt-4" id="poets-pagination">
     <ul class="pagination pagination-sm">
         {% if page_obj.has_previous %}
         <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">{% trans "Previous" %}</a></li>
@@ -47,4 +84,173 @@
     </ul>
 </nav>
 {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+    const input = document.getElementById('poets-live-search');
+    const grid = document.getElementById('poets-grid');
+    const mount = document.getElementById('poets-list-mount');
+    if (!input || !grid || !mount) return;
+
+    const searchUrl = input.getAttribute('data-search-url');
+    const defaultPhoto = input.getAttribute('data-default-photo') || '';
+    const msgEmpty = input.getAttribute('data-msg-empty') || '';
+    const msgPoetImage = input.getAttribute('data-msg-poet-image') || '';
+
+    let gridBackup = grid.innerHTML;
+    let paginationBackup = '';
+    const paginationEl = document.getElementById('poets-pagination');
+    if (paginationEl) {
+        paginationBackup = paginationEl.outerHTML;
+    }
+
+    let debounceTimer = null;
+    let abortController = null;
+
+    function clearDebounce() {
+        if (debounceTimer) {
+            clearTimeout(debounceTimer);
+            debounceTimer = null;
+        }
+    }
+
+    function restoreServerList() {
+        if (abortController) {
+            abortController.abort();
+            abortController = null;
+        }
+        grid.innerHTML = gridBackup;
+        const existingNav = mount.querySelector('#poets-pagination');
+        if (paginationBackup) {
+            if (existingNav) {
+                existingNav.outerHTML = paginationBackup;
+            } else {
+                mount.insertAdjacentHTML('beforeend', paginationBackup);
+            }
+        } else if (existingNav) {
+            existingNav.remove();
+        }
+    }
+
+    function removePagination() {
+        const nav = mount.querySelector('#poets-pagination');
+        if (nav) nav.remove();
+    }
+
+    function buildPoetCard(poet) {
+        const col = document.createElement('div');
+        col.className = 'col-12 col-sm-6 col-lg-4';
+
+        const card = document.createElement('div');
+        card.className = 'card sanjoor-card h-100';
+
+        const body = document.createElement('div');
+        body.className = 'card-body';
+
+        const row = document.createElement('div');
+        row.className = 'd-flex align-items-center gap-3 mb-3';
+
+        const photoHref = document.createElement('a');
+        photoHref.className = 'sanjoor-link';
+        photoHref.href = poet.detail_url;
+
+        const img = document.createElement('img');
+        img.className = 'poet-photo';
+        img.src = poet.photo_url || defaultPhoto;
+        img.alt = msgPoetImage;
+        photoHref.appendChild(img);
+
+        const titleWrap = document.createElement('h2');
+        titleWrap.className = 'h6 mb-0';
+
+        const titleLink = document.createElement('a');
+        titleLink.className = 'sanjoor-link';
+        titleLink.href = poet.detail_url;
+        titleLink.textContent = poet.name;
+
+        titleWrap.appendChild(titleLink);
+        row.appendChild(photoHref);
+        row.appendChild(titleWrap);
+
+        const desc = document.createElement('p');
+        desc.className = 'small muted-meta mb-0';
+        desc.textContent = poet.description || '';
+
+        body.appendChild(row);
+        body.appendChild(desc);
+        card.appendChild(body);
+        col.appendChild(card);
+        return col;
+    }
+
+    function renderResults(poets) {
+        removePagination();
+        grid.innerHTML = '';
+        if (!poets.length) {
+            const p = document.createElement('p');
+            p.className = 'muted-meta';
+            p.textContent = msgEmpty;
+            grid.appendChild(p);
+            return;
+        }
+        const frag = document.createDocumentFragment();
+        poets.forEach(function (poet) {
+            frag.appendChild(buildPoetCard(poet));
+        });
+        grid.appendChild(frag);
+    }
+
+    function runSearch(q) {
+        if (!q) {
+            restoreServerList();
+            return;
+        }
+        if (abortController) {
+            abortController.abort();
+        }
+        abortController = new AbortController();
+        const url = new URL(searchUrl, window.location.origin);
+        url.searchParams.set('q', q);
+
+        fetch(url.toString(), {
+            method: 'GET',
+            headers: { Accept: 'application/json' },
+            signal: abortController.signal,
+        })
+            .then(function (res) {
+                if (!res.ok) throw new Error('search failed');
+                return res.json();
+            })
+            .then(function (data) {
+                renderResults(data.poets || []);
+            })
+            .catch(function (err) {
+                if (err.name === 'AbortError') return;
+                restoreServerList();
+            });
+    }
+
+    input.addEventListener('input', function () {
+        const q = input.value.trim();
+        clearDebounce();
+        if (!q) {
+            restoreServerList();
+            return;
+        }
+        debounceTimer = setTimeout(function () {
+            runSearch(q);
+        }, 320);
+    });
+
+    input.addEventListener('search', function () {
+        if (!input.value.trim()) {
+            clearDebounce();
+            restoreServerList();
+        }
+    });
+})();
+</script>
 {% endblock %}

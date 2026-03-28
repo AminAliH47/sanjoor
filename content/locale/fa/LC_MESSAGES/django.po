@@ -49,3 +49,11 @@ msgstr "مصرع"
 #: .\content\models\poetry.py:75
 msgid "verses"
 msgstr "مصرع‌ها"
+
+#: .\content\models\poetry.py
+msgid "Show in the featured list on the home page for quick access."
+msgstr "نمایش در فهرست ویژه صفحه اصلی برای دسترسی سریع."
+
+#: .\content\models\poetry.py
+msgid "selected for home"
+msgstr "انتخاب‌شده برای صفحه اصلی"

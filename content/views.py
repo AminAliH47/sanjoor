@@ -1,4 +1,7 @@
 from django.core.paginator import Paginator
+from django.http import JsonResponse
+from django.urls import reverse
+from django.views import View
 from django.views.generic import DetailView, ListView, TemplateView
 
 from content import selectors
@@ -13,6 +16,30 @@ class HomeView(ListView):
 
     def get_queryset(self):
         return selectors.get_poets()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['selected_poets'] = selectors.get_selected_poets()
+        return context
+
+
+class PoetListSearchAjaxView(View):
+    """JSON list of poets for live search on the home page (name and description)."""
+
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get('q', '').strip()
+        poets = []
+        for poet in selectors.search_poets_by_name_or_description(query):
+            poets.append(
+                {
+                    'id': poet.id,
+                    'name': poet.name or str(poet.id),
+                    'description': (poet.description or '')[:280],
+                    'photo_url': poet.photo.url if poet.photo else None,
+                    'detail_url': reverse('content:poet-detail', kwargs={'poet_id': poet.id}),
+                }
+            )
+        return JsonResponse({'poets': poets, 'query': query})
 
 
 class PoetDetailView(DetailView):
