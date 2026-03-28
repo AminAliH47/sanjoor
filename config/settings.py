@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_celery_beat',
     'drf_spectacular',
+    'cacheops',
 
     # Django Apps
     'common.apps.CommonConfig',
@@ -125,7 +126,23 @@ LONG_CACHE_TIMEOUT = 60 * 60 * 24 * 7  # 7 Days
 CACHEOPS_DEFAULTS = {
     'timeout': 60 * 60 * (envs.CACHE_TIMEOUT_HOURS or 5)
 }
-CACHEOPS = {}
+CACHEOPS = {
+    'content.Poem': {
+        'timeout': LONG_CACHE_TIMEOUT
+    },
+    'content.Poet': {
+        'timeout': LONG_CACHE_TIMEOUT
+    },
+    'content.Category': {
+        'timeout': LONG_CACHE_TIMEOUT
+    },
+    'content.Verse': {
+        'timeout': LONG_CACHE_TIMEOUT
+    },
+    'content.PoemSound': {
+        'timeout': LONG_CACHE_TIMEOUT
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
